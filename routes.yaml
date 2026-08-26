@@ -1,0 +1,42 @@
+# local dev
+routes:
+  - id: echo-api
+    path: /echo/*
+    methods: [GET, POST, PUT, DELETE]
+    target: http://localhost:9001
+    strip_prefix: /echo
+    middlewares: [rate_limit]
+    middleware_config:
+      rate_limit:
+        capacity: 20
+        refill_per_second: 2.0
+
+  - id: users-api
+    path: /api/users/*
+    methods: [GET, POST]
+    target: http://localhost:9001
+    strip_prefix: /api/users
+    middlewares: [auth, rate_limit]
+    middleware_config:
+      auth:
+        required: true
+        scopes: [users:read]
+      rate_limit:
+        capacity: 10
+        refill_per_second: 1.0
+
+  - id: slow-api
+    path: /slow/*
+    methods: [GET]
+    target: http://localhost:9002
+    strip_prefix: /slow
+
+  - id: flaky-api
+    path: /flaky/*
+    methods: [GET]
+    target: http://localhost:9003
+    strip_prefix: /flaky
+    circuit_breaker:
+      failure_threshold: 3
+      cooldown_seconds: 10
+      half_open_max_calls: 1

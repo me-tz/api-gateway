@@ -1,0 +1,43 @@
+# VCS
+.git/
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local env files — the image should get env from docker-compose, not the repo
+.env
+.env.local
+
+# Testing / caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+tests/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Docs and dev artifacts not needed in the image
+README.md
+DECISIONS.md
+examples/
+*.md
+
+# Docker itself
+Dockerfile
+docker-compose.yml
+.dockerignore

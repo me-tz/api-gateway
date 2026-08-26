@@ -1,0 +1,83 @@
+api-gateway/
+├── README.md
+├── DECISIONS.md
+├── docker-compose.yml
+├── Dockerfile
+├── pyproject.toml
+├── justfile
+├── .env.example
+├── .env.docker
+├── routes.yaml
+├── routes.docker.yaml
+├── assets
+│   ├── architecture-flowchart.png
+│   └──request-flowchart.png
+├── examples/
+│   └── e2e_curl.sh
+├── scripts/
+│   ├── schema.sql
+│   └── seed_routes_from_yaml.py
+├── src/
+│   └── gateway/
+│       ├── __init__.py
+│       ├── main.py
+│       ├── config/
+│       │   ├── __init__.py
+│       │   ├── settings.py
+│       │   └── factories.py
+│       ├── interfaces/
+│       │   ├── __init__.py
+│       │   ├── auth.py
+│       │   ├── rate_limit.py
+│       │   └── route_repo.py
+│       ├── auth/
+│       │   ├── __init__.py
+│       │   ├── mock_provider.py
+│       │   └── router.py
+│       ├── rate_limit/
+│       │   ├── __init__.py
+│       │   ├── memory_store.py
+│       │   └── redis_store.py
+│       ├── routes/
+│       │   ├── __init__.py
+│       │   ├── models.py
+│       │   ├── matcher.py
+│       │   ├── registry.py
+│       │   ├── yaml_repo.py
+│       │   ├── redis_repo.py
+│       │   └── postgres_repo.py
+│       ├── backends/
+│       │   ├── __init__.py
+│       │   ├── circuit_breaker.py
+│       │   └── load_balancer.py
+│       ├── middlewares/
+│       │   ├── __init__.py
+│       │   ├── validator.py
+│       │   └── base.py
+│       ├── proxy/
+│       │   ├── __init__.py
+│       │   ├── client.py
+│       │   └── streaming.py
+│       ├── admin/
+│       │   ├── __init__.py
+│       │   └── router.py
+│       └── observability/
+│           ├── __init__.py
+│           ├── logging.py
+│           └── metrics.py
+├── mock_backends/
+│   ├── __init__.py
+│   ├── run_all.py
+│   ├── echo/main.py
+│   ├── slow/main.py
+│   └── flaky/main.py
+└── tests/
+    ├── conftest.py
+    ├── test_route_matching.py
+    ├── test_auth_middleware.py
+    ├── test_rate_limiting.py
+    ├── test_proxying.py
+    ├── test_header_transform.py
+    ├── test_backend_down.py
+    ├── test_middleware_validator.py
+    └── test_admin_api.py

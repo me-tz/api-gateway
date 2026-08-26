@@ -1,0 +1,44 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: gateway
+      POSTGRES_PASSWORD: gateway
+      POSTGRES_DB: gateway
+    ports: ["5432:5432"]
+    volumes:
+      - ./scripts/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gateway"]
+      interval: 5s
+
+  echo-service:
+    build: {context: ., dockerfile: Dockerfile}
+    command: uvicorn mock_backends.echo.main:app --host 0.0.0.0 --port 8080
+    ports: ["9001:8080"]
+
+  slow-service:
+    build: {context: ., dockerfile: Dockerfile}
+    command: uvicorn mock_backends.slow.main:app --host 0.0.0.0 --port 8080
+    ports: ["9002:8080"]
+
+  flaky-service:
+    build: {context: ., dockerfile: Dockerfile}
+    command: uvicorn mock_backends.flaky.main:app --host 0.0.0.0 --port 8080
+    ports: ["9003:8080"]
+
+  gateway:
+    build: {context: ., dockerfile: Dockerfile}
+    env_file: .env.docker
+    ports: ["8080:8080"]
+    depends_on:
+      redis: {condition: service_healthy}
+      postgres: {condition: service_healthy}
+      echo-service: {condition: service_started}
