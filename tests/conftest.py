@@ -13,6 +13,7 @@ os.environ["GATEWAY_ADMIN_TOKEN"] = "admin-dev-token"
 
 import pytest
 from httpx import ASGITransport, AsyncClient
+from asgi_lifespan import LifespanManager
 
 from gateway.auth.mock_provider import MockAuthProvider
 
@@ -36,10 +37,15 @@ async def client(tmp_path, monkeypatch):
     from gateway import main as m
     reload(m)
 
-    async with AsyncClient(
-        transport=ASGITransport(app=m.app), base_url="http://test"
-    ) as c:
-        yield c, m.app
+    # 1. Wrap the app with LifespanManager to handle startup/shutdown hooks
+    async with LifespanManager(m.app) as manager:
+        # 2. Pass the manager's version of the app to the transport
+        transport = ASGITransport(app=manager.app)
+
+        async with AsyncClient(
+                transport=transport, base_url="http://test"
+        ) as c:
+            yield c, manager.app
 
 
 @pytest.fixture
