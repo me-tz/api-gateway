@@ -26,6 +26,7 @@ This document records the significant design decisions made while building this 
 - [Circuit Breaker](#circuit-breaker)
 - [Metrics](#metrics)
 - [Error Handling](#error-handling)
+- [One Thing I Would Do Differently With More time](#one-thing-i-would-do-differently-with-more-time)
 
 ---
 
@@ -464,4 +465,6 @@ Status codes:
 ---
 
 ## One Thing I Would Do Differently With More time
-Write code by myself and make improve design.
+It isn't any specific feature that I would have developed better, but rather the development process itself. If I had more time, I would have been more hands-on with the code, covered it with more tests, and given it a bit more thought before rushing into development. Consequently, both the application's design and the code itself would likely have been of higher quality and more precise.
+
+---
