@@ -431,6 +431,7 @@ Or via the Admin API (`PUT /admin/routes/{id}` with the whole route body and `en
 
 ## Tests
 
+**ALL LOGS TESTS ARE FAILED**. \
 Run the full test suite:
 
 ```bash
