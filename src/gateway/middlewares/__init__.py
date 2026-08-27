@@ -1,5 +1,6 @@
-"""Pluggable middleware base and registry."""
-"""Auto-import all middleware modules so their register_middleware() calls run."""
+"""Pluggable middleware base and registry.
+Auto-import all middleware modules so their register_middleware() calls run.
+"""
 from __future__ import annotations
 
 import importlib
