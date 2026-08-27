@@ -1,5 +1,4 @@
 """Prometheus metric definitions."""
-"Numerical time series aggregated over many events. 'P95 latency of route Y over the last 5 minutes.'"\
 
 from __future__ import annotations
 
